@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Substitution Cipher with Symbols</title>
+    <title>Substitution Cipher with Symbols and Custom Font</title>
     <style>
+        @font-face {
+            font-family: 'CustomFont';
+            src: url('fonts/custom-font.woff2') format('woff2'),
+                 url('fonts/custom-font.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'CustomFont', Arial, sans-serif;
             margin: 20px;
         }
         label, input, button {
@@ -20,12 +27,9 @@
     </style>
 </head>
 <body>
-    <h1>Substitution Cipher with Symbols</h1>
+    <h1>Substitution Cipher with Symbols and Custom Font</h1>
     <label for="plainText">Plain Text:</label>
     <textarea id="plainText"></textarea>
-    
-    <label for="cipherKey">Cipher Key (26 unique symbols):</label>
-    <input type="text" id="cipherKey" maxlength="26">
     
     <button onclick="encrypt()">Encrypt</button>
     <button onclick="decrypt()">Decrypt</button>
@@ -37,23 +41,26 @@
     <textarea id="decryptedText" readonly></textarea>
 
     <script>
+        // Predefined set of 26 unique symbols
+        const predefinedCipherKey = "!@#$%^&*()_+[]{}|;:,.<>?/~`123456";
+
         function encrypt() {
             const plainText = document.getElementById('plainText').value;
-            const cipherKey = document.getElementById('cipherKey').value;
+            const cipherKey = predefinedCipherKey;
             const encryptedText = substitutionCipher(plainText, cipherKey, true);
             document.getElementById('encryptedText').textContent = encryptedText;
         }
 
         function decrypt() {
             const encryptedText = document.getElementById('encryptedText').value;
-            const cipherKey = document.getElementById('cipherKey').value;
+            const cipherKey = predefinedCipherKey;
             const decryptedText = substitutionCipher(encryptedText, cipherKey, false);
             document.getElementById('decryptedText').textContent = decryptedText;
         }
 
         function substitutionCipher(text, cipherKey, encrypt) {
             const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            if (cipherKey.length !== 26) {
+            if (cipherKey.length !== 26 || hasDuplicates(cipherKey)) {
                 alert("Cipher key must be 26 unique symbols.");
                 return "";
             }
@@ -69,6 +76,10 @@
                 }
             }
             return result;
+        }
+
+        function hasDuplicates(array) {
+            return new Set(array).size !== array.length;
         }
     </script>
 </body>
