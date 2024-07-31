@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Substitution Cipher</title>
+    <title>Substitution Cipher with Symbols</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,11 +20,11 @@
     </style>
 </head>
 <body>
-    <h1>Substitution Cipher</h1>
+    <h1>Substitution Cipher with Symbols</h1>
     <label for="plainText">Plain Text:</label>
     <textarea id="plainText"></textarea>
     
-    <label for="cipherKey">Cipher Key (26 letters):</label>
+    <label for="cipherKey">Cipher Key (26 unique symbols):</label>
     <input type="text" id="cipherKey" maxlength="26">
     
     <button onclick="encrypt()">Encrypt</button>
@@ -39,25 +39,25 @@
     <script>
         function encrypt() {
             const plainText = document.getElementById('plainText').value;
-            const cipherKey = document.getElementById('cipherKey').value.toUpperCase();
+            const cipherKey = document.getElementById('cipherKey').value;
             const encryptedText = substitutionCipher(plainText, cipherKey, true);
             document.getElementById('encryptedText').textContent = encryptedText;
         }
 
         function decrypt() {
             const encryptedText = document.getElementById('encryptedText').value;
-            const cipherKey = document.getElementById('cipherKey').value.toUpperCase();
+            const cipherKey = document.getElementById('cipherKey').value;
             const decryptedText = substitutionCipher(encryptedText, cipherKey, false);
             document.getElementById('decryptedText').textContent = decryptedText;
         }
 
         function substitutionCipher(text, cipherKey, encrypt) {
-            if (cipherKey.length !== 26 || !/^[A-Z]+$/.test(cipherKey)) {
-                alert("Cipher key must be 26 unique letters.");
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (cipherKey.length !== 26) {
+                alert("Cipher key must be 26 unique symbols.");
                 return "";
             }
 
-            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             let result = "";
 
             for (let char of text.toUpperCase()) {
