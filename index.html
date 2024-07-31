@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Substitution Cipher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, input, button {
+            display: block;
+            margin-bottom: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Substitution Cipher</h1>
+    <label for="plainText">Plain Text:</label>
+    <textarea id="plainText"></textarea>
+    
+    <label for="cipherKey">Cipher Key (26 letters):</label>
+    <input type="text" id="cipherKey" maxlength="26">
+    
+    <button onclick="encrypt()">Encrypt</button>
+    <button onclick="decrypt()">Decrypt</button>
+    
+    <h2>Encrypted Text:</h2>
+    <textarea id="encryptedText" readonly></textarea>
+    
+    <h2>Decrypted Text:</h2>
+    <textarea id="decryptedText" readonly></textarea>
+
+    <script>
+        function encrypt() {
+            const plainText = document.getElementById('plainText').value;
+            const cipherKey = document.getElementById('cipherKey').value.toUpperCase();
+            const encryptedText = substitutionCipher(plainText, cipherKey, true);
+            document.getElementById('encryptedText').textContent = encryptedText;
+        }
+
+        function decrypt() {
+            const encryptedText = document.getElementById('encryptedText').value;
+            const cipherKey = document.getElementById('cipherKey').value.toUpperCase();
+            const decryptedText = substitutionCipher(encryptedText, cipherKey, false);
+            document.getElementById('decryptedText').textContent = decryptedText;
+        }
+
+        function substitutionCipher(text, cipherKey, encrypt) {
+            if (cipherKey.length !== 26 || !/^[A-Z]+$/.test(cipherKey)) {
+                alert("Cipher key must be 26 unique letters.");
+                return "";
+            }
+
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let result = "";
+
+            for (let char of text.toUpperCase()) {
+                if (alphabet.includes(char)) {
+                    const index = encrypt ? alphabet.indexOf(char) : cipherKey.indexOf(char);
+                    result += encrypt ? cipherKey[index] : alphabet[index];
+                } else {
+                    result += char;
+                }
+            }
+            return result;
+        }
+    </script>
+</body>
+</html>
