@@ -7,13 +7,13 @@
     <style>
         @font-face {
             font-family: 'CustomFont';
-            src: url('fonts/custom-font.woff2') format('woff2'),
-                 url('fonts/custom-font.woff') format('woff');
+            src: url('fonts/SyilloicSymbol-RzaW.woff2') format('woff2'),
+                 url('fonts/SyilloicSymbol-RzaW.woff') format('woff');
             font-weight: normal;
             font-style: normal;
         }
         body {
-            font-family: 'CustomFont', Arial, sans-serif;
+            font-family: 'SyilloicSymbol-RzaW', Arial, sans-serif;
             margin: 20px;
         }
         label, input, button {
@@ -48,14 +48,14 @@
             const plainText = document.getElementById('plainText').value;
             const cipherKey = predefinedCipherKey;
             const encryptedText = substitutionCipher(plainText, cipherKey, true);
-            document.getElementById('encryptedText').textContent = encryptedText;
+            document.getElementById('encryptedText').value = encryptedText;
         }
 
         function decrypt() {
             const encryptedText = document.getElementById('encryptedText').value;
             const cipherKey = predefinedCipherKey;
             const decryptedText = substitutionCipher(encryptedText, cipherKey, false);
-            document.getElementById('decryptedText').textContent = decryptedText;
+            document.getElementById('decryptedText').value = decryptedText;
         }
 
         function substitutionCipher(text, cipherKey, encrypt) {
